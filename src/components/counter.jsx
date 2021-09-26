@@ -1,31 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Counter = () => {
-  const [count, setCount] = useState(5);
-
+// ({ counter, onDecrement, onDelete }) а можно и так, и ко всем значениям id, value, name подставить counter.
+const Counter = ({ id, value, name, onIncrement, onDecrement, onDelete }) => {
   const formCount = () => {
-    return count === 0 ? 0 : count;
+    return value === 0 ? 0 : value;
   };
 
   const getBadgeClasses = () => {
     let classes = "badge m-1 bg-";
-    classes += count === 0 ? "danger" : "primary";
+    classes += value === 0 ? "danger" : "primary";
     return classes;
-  };
-
-  const handleIncrement = (idProduct) => {
-    console.log("+", idProduct);
-    setCount(count + 1);
-  };
-
-  const handleDecrement = (idProduct) => {
-    if (count === 0) return count;
-    setCount(count - 1);
   };
 
   return (
     <>
-      <h1>Counter</h1>
       <div
         style={{
           display: "flex",
@@ -34,20 +22,24 @@ const Counter = () => {
         }}
       >
         <div className={getBadgeClasses()} style={{ fontSize: "22px" }}>
-          {formCount()}
+          {formCount(value)}
         </div>
         <button
-          onClick={() => handleIncrement({ id: 1 })}
+          onClick={() => onIncrement(id)}
           className="btn btn-secondary m-1"
         >
           +
         </button>
         <button
-          onClick={() => handleDecrement({ id: 1 })}
+          onClick={() => onDecrement(id)}
           className="btn btn-secondary m-1"
         >
           -
         </button>
+        <button onClick={() => onDelete(id)} className="btn btn-danger m-1">
+          Удалить
+        </button>
+        <div style={{ fontSize: "20px", paddingLeft: "20px" }}>{name}</div>
       </div>
     </>
   );
